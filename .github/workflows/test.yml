@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Give permissons to repository
+        run: git config --global --add safe.directory ${{ github.workspace }}
+
+      - uses: dorny/paths-filter@v3
+        id: check_changed_files
+        with:
+          filters: |
+            have_files_changed:
+              - '*'
